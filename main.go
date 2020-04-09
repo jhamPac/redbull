@@ -18,13 +18,13 @@ func main() {
 	r := bytes.NewReader(data)
 	tokenizer := html.NewTokenizer(r)
 
+	done := false
 	m := make(map[string]string)
-fuck:
-	for {
+	for !done {
 		tt := tokenizer.Next()
 		switch tt {
 		case html.ErrorToken:
-			break fuck
+			done = true
 		case html.StartTagToken:
 			t := tokenizer.Token()
 			if t.Data == "span" {
