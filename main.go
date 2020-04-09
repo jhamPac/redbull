@@ -10,16 +10,11 @@ import (
 	"golang.org/x/net/html"
 )
 
-func main() {
-	data, err := ioutil.ReadFile("index.html")
-	if err != nil {
-		log.Fatalf("could not parse the file %v", err)
-	}
-	r := bytes.NewReader(data)
-	tokenizer := html.NewTokenizer(r)
-
-	done := false
+func parseCountryHTML(h []byte) map[string]string {
 	m := make(map[string]string)
+	r := bytes.NewReader(h)
+	tokenizer := html.NewTokenizer(r)
+	done := false
 	for !done {
 		tt := tokenizer.Next()
 		switch tt {
@@ -60,5 +55,16 @@ func main() {
 			}
 		}
 	}
+	return m
+}
+
+func main() {
+	data, err := ioutil.ReadFile("index.html")
+	if err != nil {
+		log.Fatalf("could not parse the file %v", err)
+	}
+
+	m := parseCountryHTML(data)
+
 	fmt.Printf("All done!\n+%v", m)
 }
