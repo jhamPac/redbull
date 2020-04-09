@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
+	"os"
 	"strings"
 
 	"golang.org/x/net/html"
@@ -18,11 +19,13 @@ func main() {
 	r := bytes.NewReader(data)
 	tokenizer := html.NewTokenizer(r)
 
+	// m := make(map[string]string)
 	for {
 		tt := tokenizer.Next()
 		switch tt {
 		case html.ErrorToken:
-			return
+			fmt.Println("All done!")
+			os.Exit(1)
 		case html.StartTagToken:
 			t := tokenizer.Token()
 			if t.Data == "span" {
@@ -32,14 +35,23 @@ func main() {
 						text := tokenizer.Next()
 						if text == html.TextToken {
 							s := string(tokenizer.Text())
-							fmt.Printf("%s\n", strings.ToLower(s))
-						}
-					case "dial-code":
-						text := tokenizer.Next()
-						if text == html.TextToken {
-							fmt.Printf("%s\n", tokenizer.Text())
+							fmt.Printf("the country: %s\n", strings.ToLower(s))
+							endtt := tokenizer.Next()
+							if endtt == html.EndTagToken {
+								n := tokenizer.Next()
+								if n == html.StartTagToken {
+									if tokenizer.Token().Data == "span" {
+										text := tokenizer.Next()
+										if text == html.TextToken {
+											fmt.Printf("the next span text: %s\n", tokenizer.Text())
+										}
+									}
+
+								}
+							}
 						}
 					}
+					fmt.Println("")
 				}
 			}
 		}
