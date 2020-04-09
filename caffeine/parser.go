@@ -1,4 +1,4 @@
-package parsers
+package caffeine
 
 import (
 	"bytes"
@@ -7,7 +7,8 @@ import (
 	"golang.org/x/net/html"
 )
 
-func CountryHTML(h []byte) map[string]string {
+// ParseCountryHTML receives and []byte, parses and returns a map
+func ParseCountryHTML(h []byte) map[string]string {
 	m := make(map[string]string)
 	r := bytes.NewReader(h)
 	tokenizer := html.NewTokenizer(r)

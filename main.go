@@ -5,7 +5,7 @@ import (
 	"io/ioutil"
 	"log"
 
-	"github.com/jhampac/redbull/parsers"
+	"github.com/jhampac/redbull/caffeine"
 )
 
 func main() {
@@ -14,7 +14,7 @@ func main() {
 		log.Fatalf("could not parse the file %v", err)
 	}
 
-	m := parsers.CountryHTML(data)
+	m := caffeine.ParseCountryHTML(data)
 
 	fmt.Printf("All done!\n+%v", m)
 }
