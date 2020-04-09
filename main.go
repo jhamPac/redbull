@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
-	"os"
 	"strings"
 
 	"golang.org/x/net/html"
@@ -20,12 +19,12 @@ func main() {
 	tokenizer := html.NewTokenizer(r)
 
 	m := make(map[string]string)
+fuck:
 	for {
 		tt := tokenizer.Next()
 		switch tt {
 		case html.ErrorToken:
-			fmt.Printf("All done!\n+%v", m)
-			os.Exit(1)
+			break fuck
 		case html.StartTagToken:
 			t := tokenizer.Token()
 			if t.Data == "span" {
@@ -60,4 +59,5 @@ func main() {
 			}
 		}
 	}
+	fmt.Printf("All done!\n+%v", m)
 }
