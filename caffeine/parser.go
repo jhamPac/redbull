@@ -7,7 +7,7 @@ import (
 	"golang.org/x/net/html"
 )
 
-// ParseCountryHTML receives and []byte, parses and returns a map
+// ParseCountryHTML parses html and returns a predefined map
 func ParseCountryHTML(h []byte) map[string]string {
 	m := make(map[string]string)
 	r := bytes.NewReader(h)
