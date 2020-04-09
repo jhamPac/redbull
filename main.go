@@ -33,18 +33,19 @@ func main() {
 					var value string
 					switch a.Val {
 					case "country-name":
-						text := tokenizer.Next()
-						if text == html.TextToken {
+						tt := tokenizer.Next()
+						if tt == html.TextToken {
 							s := strings.Trim(strings.ToLower(string(tokenizer.Text())), "")
 							rs := strings.ReplaceAll(s, " ", "-")
 							key = rs
 							endtt := tokenizer.Next()
 							if endtt == html.EndTagToken {
-								n := tokenizer.Next()
-								if n == html.StartTagToken {
-									if tokenizer.Token().Data == "span" {
-										text := tokenizer.Next()
-										if text == html.TextToken {
+								tt := tokenizer.Next()
+								if tt == html.StartTagToken {
+									t := tokenizer.Token()
+									if t.Data == "span" {
+										tt := tokenizer.Next()
+										if tt == html.TextToken {
 											code := strings.Trim(string(tokenizer.Text()), "")
 											value = code
 										}
