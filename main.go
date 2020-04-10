@@ -2,9 +2,9 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"log"
+	"os"
 
 	"github.com/jhampac/redbull/caffeine"
 )
@@ -21,5 +21,5 @@ func main() {
 		log.Fatalf("could not successfully encode to json: %v", err)
 	}
 
-	fmt.Printf("All done!\n%s", string(j))
+	ioutil.WriteFile("countries.json", j, os.ModePerm)
 }
