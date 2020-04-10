@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -15,6 +16,10 @@ func main() {
 	}
 
 	m := caffeine.ParseCountryHTML(data)
+	j, err := json.MarshalIndent(m, "", "	")
+	if err != nil {
+		log.Fatalf("could not successfully encode to json: %v", err)
+	}
 
-	fmt.Printf("All done!\n+%v", m)
+	fmt.Printf("All done!\n%s", string(j))
 }

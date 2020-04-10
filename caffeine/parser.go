@@ -7,9 +7,15 @@ import (
 	"golang.org/x/net/html"
 )
 
+// CC holds data about a country and its calling code
+type CC struct {
+	Country string `json:"country"`
+	Code    string `json:"code"`
+}
+
 // ParseCountryHTML parses html and returns a predefined map
-func ParseCountryHTML(h []byte) map[string]string {
-	m := make(map[string]string)
+func ParseCountryHTML(h []byte) []CC {
+	m := []CC{}
 	r := bytes.NewReader(h)
 	tokenizer := html.NewTokenizer(r)
 
@@ -47,7 +53,8 @@ func ParseCountryHTML(h []byte) map[string]string {
 
 								}
 							}
-							m[key] = value
+							c := CC{Country: key, Code: value}
+							m = append(m, c)
 						}
 					}
 				}
